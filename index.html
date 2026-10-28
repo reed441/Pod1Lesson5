@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Pod1Lesson5</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pod1Lesson5</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="today-lets-work-with-merging-and-manipulating-data" class="level1">
+<h1>Today: Let’s Work with Merging and Manipulating Data</h1>
+<p>Learning Goals</p>
+<p>By the end of this session, learners will be able to:</p>
+<ol type="1">
+<li>Merge two dataframes together into one dataframe using functions like left_join() and right_join(), then save it as a new CSV.</li>
+<li>Clean and extract information from strings within R.</li>
+<li>Reformat your data into wide and long formats for various use cases later on.</li>
+</ol>
+<p>We are going to continue working with the rehab_study.csv, but we are going to try merging it with some demographic data that was stored in a separate CSV file called rehab_study_demo.csv. For the final “Your Turn” at the end, we will also be introducing another fake dataset called lab_results.csv. These 3 CSVs are all available on the GitHub, but if you need them again, you can download them here. Just make sure you save them in the directory you’ll be working from!</p>
+<ul>
+<li><p>Download rehab_study.csv from <a href="https://github.com/reprorehab/reprorehab2026-pod1/blob/main/rehab_study.csv">GitHub</a></p></li>
+<li><p>Download rehab_study_demo.csv from <a href="https://github.com/reprorehab/reprorehab2026-pod1/blob/main/rehab_study_demo.csv">GitHub</a></p></li>
+<li><p>Download lab_results.csv from <a href="https://github.com/reprorehab/reprorehab2026-pod1/blob/main/lab_results.csv">GitHub</a></p></li>
+</ul>
+<section id="setting-up-your-workspace" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-your-workspace">1. Setting Up Your Workspace</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clear environment</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set working directory </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">'/Users/amreed18/Documents/ReproRehab/TA Materials/RR-TA-Materials-2026-2027'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># read in your data </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>clinical_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'rehab_study.csv'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>demo_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'rehab_study_demo.csv'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For most (if not, all) data manipulation in R, you’ll want to use the Tidyverse package. Let’s install and load that now. If you’ve already installed this package in a prior session, you do not need to reinstall it now; you would only have to load the package now since this is a new session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># uncomment the first line if you need to install this package for the first time</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tidyverse")</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.2
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+</section>
+<section id="getting-familiar-with-your-data" class="level2">
+<h2 class="anchored" data-anchor-id="getting-familiar-with-your-data">2. Getting Familiar With Your Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(clinical_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id age        group baseline_score followup_score visits
+1           P001  51 Intervention             59             69      4
+2           P002  60 Intervention             50             58      6
+3           P003  38 Intervention             35             46      9
+4           P004  29 Intervention             47             57      6
+5           P005  32 Intervention             59             76      8
+6           P006  38 Intervention             61             73      4
+  completed
+1       Yes
+2       Yes
+3       Yes
+4       Yes
+5       Yes
+6       Yes</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  study_id     gender site_location        education_level  income_usd
+1     P001     Female            MA      Bachelor's Degree $60,000.00 
+2     P002       Male            NY Some Community College $35,000.00 
+3     P003 Non-Binary            AZ     Associate's Degree $40,000.00 
+4     P004     Female            MA  Less than high school $30,000.00 
+5     P005       Male            WA    High School Diploma $25,500.00 
+6     P006     Female            WA    High School Diploma $45,000.00 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(demo_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   24 obs. of  5 variables:
+ $ study_id       : Factor w/ 24 levels "P001","P002",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ gender         : Factor w/ 3 levels "Female","Male",..: 1 2 3 1 2 1 2 1 2 1 ...
+ $ site_location  : Factor w/ 9 levels "AZ","CA","IN",..: 4 6 1 4 9 9 8 8 2 2 ...
+ $ education_level: Factor w/ 8 levels "Associate's Degree",..: 2 8 1 5 4 4 2 6 3 7 ...
+ $ income_usd     : Factor w/ 18 levels "$115,000.00 ",..: 13 7 8 5 4 10 15 17 18 1 ...</code></pre>
+</div>
+</div>
+<p>To merge across two dataframes, you need to identify the common column across both dataframes. Usually, the common column will be your “Study ID” or equivalent. In clinical_data, we have a column called <code>participant_id</code> but in demo_data, the column is called <code>study_id</code>. For R to recognize these as the same when we merge, they have to have the same name.</p>
+<p>You can rename columns using the rename() function within Tidyverse.</p>
+</section>
+<section id="rename-function" class="level2">
+<h2 class="anchored" data-anchor-id="rename-function">3. Rename Function</h2>
+<section id="general-syntax" class="level3">
+<h3 class="anchored" data-anchor-id="general-syntax"><em>General Syntax</em></h3>
+<blockquote class="blockquote">
+<p>rename(dataframe, new_name = old_name)</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>demo_data <span class="ot">&lt;-</span> <span class="fu">rename</span>(demo_data,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">participant_id =</span> study_id)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(demo_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "participant_id"  "gender"          "site_location"   "education_level"
+[5] "income_usd"     </code></pre>
+</div>
+</div>
+<section id="your-turn-within-demo_data-change-the-variable-name-for-income_usd-to-income." class="level4">
+<h4 class="anchored" data-anchor-id="your-turn-within-demo_data-change-the-variable-name-for-income_usd-to-income.">Your Turn: Within demo_data, change the variable name for income_usd to income.</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>demo_data <span class="ot">&lt;-</span> <span class="fu">rename</span>(demo_data, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">income =</span> income_usd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>You can also change the way your data is represented. For example, if you wanted to see everyone in order from least income to highest income, you can sort.</p>
+<p>To sort just a variable, use sort(). To sort an entire data frame, use order().</p>
+</section>
+</section>
+</section>
+<section id="sorting-and-ordering-your-data" class="level2">
+<h2 class="anchored" data-anchor-id="sorting-and-ordering-your-data">4. Sorting and Ordering Your Data</h2>
+<section id="sort-function" class="level3">
+<h3 class="anchored" data-anchor-id="sort-function">Sort Function</h3>
+<section id="general-syntax-1" class="level4">
+<h4 class="anchored" data-anchor-id="general-syntax-1">General Syntax</h4>
+<blockquote class="blockquote">
+<p>sort(dataframe, new_name = old_name)</p>
+</blockquote>
+</section>
+</section>
+<section id="order-function" class="level3">
+<h3 class="anchored" data-anchor-id="order-function">Order Function</h3>
+<section id="general-syntax-2" class="level4">
+<h4 class="anchored" data-anchor-id="general-syntax-2">General Syntax</h4>
+<blockquote class="blockquote">
+<p>order(dataframe, new_name = old_name)</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="merging-datasets-using-3-different-functions" class="level2">
+<h2 class="anchored" data-anchor-id="merging-datasets-using-3-different-functions">5. Merging Datasets Using 3 Different Functions</h2>
+<p>You can merge two dataframes together in R using a variety of functions.</p>
+<ul>
+<li><p>right_join()</p></li>
+<li><p>left_join()</p></li>
+<li><p>merge()</p></li>
+</ul>
+<section id="left_join" class="level3">
+<h3 class="anchored" data-anchor-id="left_join">left_join()</h3>
+<p>Left_join essentially tells R “Take everything from the left table, and bring in matching information from the right table when you find a match”. If there’s no match in the right table, the new columns get filled with NA (missing values). That’s why it’s called a left_join - it keeps ALL rows from the left-hand dataset.</p>
+<p>Syntax: left_join(x,y, by = “column name”)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>leftjoin_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(clinical_data, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                           demo_data,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">by =</span> <span class="st">"participant_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="your-turn-right_join" class="level3">
+<h3 class="anchored" data-anchor-id="your-turn-right_join">Your Turn: right_join()</h3>
+<p>right_join essentially tells R “Take everything from the right table, and bring in matching information from the left table when you find a match”. If there’s no match in the right table, the new columns get filled with NA (missing values). That’s why it’s called a right_join - it keeps ALL rows from the right-hand dataset.</p>
+<p>Syntax: right_join(x, y, by = “column_name”)</p>
+<p>Give it a try below by calling this newly merged dataset rightjoin_data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click here for the Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rightjoin_data <span class="ot">&lt;-</span> <span class="fu">right_join</span>(demo_data, clinical_data, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">by =</span> <span class="st">"participant_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="merge" class="level3">
+<h3 class="anchored" data-anchor-id="merge">merge()</h3>
+<p>You’re probably wondering “What’s the point of merge() if we already covered left_join() / right_join?”. Well, merge() is actually included in base R. So, if you don’t have tidyverse loaded in your session for some reason, you can use merge.</p>
+<p>Syntax: merge(x, y, by = “column_name”, all.x = TRUE/FALSE, all.y = TRUE/FALSE)</p>
+<p>Where</p>
+<ul>
+<li><p>x: dataframe 1</p></li>
+<li><p>y: dataframe 2</p></li>
+<li><p>all.x = If set to TRUE, keep all things from dataframe 1</p></li>
+<li><p>all.y = If set to TRUE, keep all things from dataframe 2</p></li>
+</ul>
+<p>Other key differences</p>
+<ol type="1">
+<li>How join types are “selected”: As you can see above, you can still do a left or right join using the merge function, you just specify it in either of the all.x or all.y arguments.</li>
+<li>Row Reordering: Unlike left_join or right_join, merge() automatically sorts the output dataset by the “by” column. So, for example, if you’re joining by <code>participant_id</code>, the newly merged dataset will be ordered by the <code>participant_id</code>.</li>
+</ol>
+<section id="example-merge" class="level4">
+<h4 class="anchored" data-anchor-id="example-merge">Example: merge()</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(clinical_data, demo_data,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">by =</span> <span class="st">"participant_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Since <code>participant_id</code> is already in order, no reordering happened.. but its something to keep in mind.</p>
+</section>
+</section>
+</section>
+<section id="reshaping-data---an-important-step-for-future-data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="reshaping-data---an-important-step-for-future-data-visualization">6. Reshaping Data - An Important Step for Future Data Visualization</h2>
+<p>Data visualizations are one of the most powerful things R can do. Sometimes, in order to create visualizations we want, we have to reshape how our data looks so R can read it correctly to make said visualizations.</p>
+<p>You will either be going from wide format to long format <strong><em>or</em></strong> long format to wide format.</p>
+<p>For example, let’s look at <code>rehab_study.csv</code>. <code>baseline_score</code> and <code>followup_score</code> live in two separate columns - this is wide format, and if we wanted to create something like a boxplot comparing across timepoints, we wouldn’t be able to do it in wide format. Our data would have to be in long format.</p>
+<p>Why?</p>
+<p>In ggplot2, the most commonly used R visualization package, aesthetics for your graph require a single categorical column for time point and a single numeric column for the value. Because baseline and follow up scores are spread across two columns, ggplot2 can’t easily plot them together.</p>
+<p>To reshape your data from wide to long, you can use <code>pivot_longer()</code>. <code>pivot_longer()</code> collapses multiple columns into key-value pairs.</p>
+<section id="example-pivot_longer" class="level3">
+<h3 class="anchored" data-anchor-id="example-pivot_longer">Example: pivot_longer()</h3>
+<p>Let’s pivot our data longer so that baseline and follow up are all under one categorical column called “timepoint”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>clinical_data_long <span class="ot">&lt;-</span> clinical_data <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(baseline_score, followup_score), <span class="co">#Columns to collapse</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"timepoint"</span>,         <span class="co">#Name for the column I want those columns collapsed to</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"score"</span>             <span class="co"># Where I want those respective values to go </span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see what our new dataframe looks like.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(clinical_data_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  participant_id   age group        visits completed timepoint      score
+  &lt;fct&gt;          &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt;     &lt;chr&gt;          &lt;int&gt;
+1 P001              51 Intervention      4 Yes       baseline_score    59
+2 P001              51 Intervention      4 Yes       followup_score    69
+3 P002              60 Intervention      6 Yes       baseline_score    50
+4 P002              60 Intervention      6 Yes       followup_score    58
+5 P003              38 Intervention      9 Yes       baseline_score    35
+6 P003              38 Intervention      9 Yes       followup_score    46</code></pre>
+</div>
+</div>
+<p>Now, what if we wanted to calculate a score change from baseline and follow up? We would want our data in wide format. To transition back to wide format, we’ll use <code>pivot_wider()</code>.</p>
+</section>
+<section id="example-pivot_wider" class="level3">
+<h3 class="anchored" data-anchor-id="example-pivot_wider">Example: pivot_wider()</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>clinical_data_wide <span class="ot">&lt;-</span> clinical_data_long <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> timepoint, <span class="co"># values from this column will supply the new column names</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> score, <span class="co"># values from this column will be the new "values" </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, this should look like what we had at the beginning: a column for <code>baseline_score</code> and a column for <code>followup_score</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(clinical_data_wide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  participant_id   age group      visits completed baseline_score followup_score
+  &lt;fct&gt;          &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt;              &lt;int&gt;          &lt;int&gt;
+1 P001              51 Intervent…      4 Yes                   59             69
+2 P002              60 Intervent…      6 Yes                   50             58
+3 P003              38 Intervent…      9 Yes                   35             46
+4 P004              29 Intervent…      6 Yes                   47             57
+5 P005              32 Intervent…      8 Yes                   59             76
+6 P006              38 Intervent…      4 Yes                   61             73</code></pre>
+</div>
+</div>
+</section>
+<section id="your-turn-calculate-score_change-where-its-the-difference-between-follow-up-scores-and-baseline-scores." class="level3">
+<h3 class="anchored" data-anchor-id="your-turn-calculate-score_change-where-its-the-difference-between-follow-up-scores-and-baseline-scores.">Your Turn: Calculate <code>score_change</code>, where its the difference between follow up scores and baseline scores.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>clinical_data_wide <span class="ot">&lt;-</span> clinical_data_wide <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">score_change =</span> followup_score <span class="sc">-</span> baseline_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Now, let’s save the long version of our data frame as a csv for our tutorial next week since we’ll be doing some data visualization then.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(clinical_data_wide, <span class="st">'rehab_study_wide.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="handling-strings-in-r" class="level1">
+<h1>7. Handling Strings in R</h1>
+<p>In our dataset, we have a gender variable. Luckily, whoever did data entry was consistent with how they entered in “Non-Binary”, “Male”, and “Female” as they’re all consistently spelled the same way.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>merged_data<span class="sc">$</span>gender</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Female     Male       Non-Binary Female     Male       Female    
+ [7] Male       Female     Male       Female     Female     Male      
+[13] Female     Male       Male       Female     Male       Female    
+[19] Male       Female     Male       Male       Male       Female    
+Levels: Female Male Non-Binary</code></pre>
+</div>
+</div>
+<p>Having everything consistent like that makes it easy for us to manipulate the variable. For example, if we wanted to recode the variable, we could do that as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> merged_data <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">recode</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    gender,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"M"</span>, <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"F"</span>, <span class="st">"Non-Binary"</span> <span class="ot">=</span> <span class="st">"NB"</span>))</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>merged_data<span class="sc">$</span>gender</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] F  M  NB F  M  F  M  F  M  F  F  M  F  M  M  F  M  F  M  F  M  M  M  F 
+Levels: F M NB</code></pre>
+</div>
+</div>
+<p>This, however, assumes that we <strong><em>know all the patterns that we’re looking for</em></strong> and that there are not many of them. Sometimes, it’s not that simple. What if our gender variable looked like this?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4</span>) <span class="co"># random sample below - make sure same every time</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"mAle"</span>, <span class="st">"MaLe"</span>, <span class="st">"M"</span>, <span class="st">"MALE"</span>, <span class="st">"Ma"</span>, <span class="st">"FeMAle"</span>, <span class="st">"F"</span>, <span class="st">"Woman"</span>, <span class="st">"Man"</span>, <span class="st">"Fm"</span>, <span class="st">"FEMALE"</span>), <span class="dv">1000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>gender
+     F FeMAle FEMALE     Fm      M     Ma   mAle   Male   MaLe   MALE    Man 
+    80     88     76     87     99     76     84     83     79     93     84 
+ Woman 
+    71 </code></pre>
+</div>
+</div>
+<p>Notice how “Male”, “mALe”, “MaLe”, “M”, and “MALE” all represent the exact same thing but R sees them as 5 distinct groups.</p>
+<p>To handle messy text like this, we can use two essential functions from the <code>stringr</code> package (which is part of tidyverse): str_detect() and str_extract().</p>
+<section id="pattern-detection-with-str_detect" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-detection-with-str_detect">Pattern Detection with str_detect()</h2>
+<p><code>str_detect()</code> asks a simple TRUE/FALSE question: “Does this text column contain a specific pattern?”</p>
+<p>Because it returns TRUE or FALSE, it works wonderfully inside <code>filter()</code> to keep specific rows, or inside <code>mutate()</code> to create binary flag column.</p>
+<section id="str_detect-syntax" class="level3">
+<h3 class="anchored" data-anchor-id="str_detect-syntax">str_detect() Syntax</h3>
+<blockquote class="blockquote">
+<p>str_detect(string_column, “pattern”)</p>
+</blockquote>
+</section>
+<section id="example-filtering-for-degrees-with-str_detect" class="level3">
+<h3 class="anchored" data-anchor-id="example-filtering-for-degrees-with-str_detect">Example: Filtering for Degrees with str_detect()</h3>
+<p>Let’s filter our demo_data to find participants who hold any type of degree.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>degree_holders <span class="ot">&lt;-</span> demo_data <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(education_level, <span class="st">"Degree"</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(degree_holders)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id     gender site_location     education_level       income
+1           P001     Female            MA   Bachelor's Degree  $60,000.00 
+2           P003 Non-Binary            AZ  Associate's Degree  $40,000.00 
+3           P007       Male            TX   Bachelor's Degree  $70,000.00 
+4           P008     Female            TX     Master's Degree  $80,000.00 
+5           P009       Male            CA     Doctoral Degree  $90,000.00 
+6           P010     Female            CA Professional Degree $115,000.00 </code></pre>
+</div>
+</div>
+</section>
+<section id="your-turn-filter-clinical_data-for-participants-in-the-intervention-group-using-str_detect." class="level3">
+<h3 class="anchored" data-anchor-id="your-turn-filter-clinical_data-for-participants-in-the-intervention-group-using-str_detect.">Your Turn: Filter <code>clinical_data</code> for participants in the Intervention group using str_detect().</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>intervention_patients <span class="ot">&lt;-</span> clinical_data <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(group, <span class="st">"Intervention"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pattern-extraction-with-str_extract" class="level3">
+<h3 class="anchored" data-anchor-id="pattern-extraction-with-str_extract">Pattern Extraction with str_extract()</h3>
+<p>While <code>str_detect()</code> tells us <em>if</em> a pattern exists, <code>str_extract()</code> <strong>pulls out the matching text</strong> and puts it into a brand new column. If the pattern is not found, R fills in <code>NA</code>.</p>
+<p>Syntax: <code>str_extract(string_column, "pattern")</code></p>
+<section id="example-extracting-state-names-or-text-snippets" class="level4">
+<h4 class="anchored" data-anchor-id="example-extracting-state-names-or-text-snippets">Example: Extracting state names or text snippets</h4>
+<p>Let’s create a new column called <code>state_ma</code> that extracts <code>"MA"</code> from <code>site_location</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>demo_ma <span class="ot">&lt;-</span> demo_data <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">state_ma =</span> <span class="fu">str_extract</span>(site_location, <span class="st">"MA"</span>))</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_ma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id     gender site_location        education_level      income
+1           P001     Female            MA      Bachelor's Degree $60,000.00 
+2           P002       Male            NY Some Community College $35,000.00 
+3           P003 Non-Binary            AZ     Associate's Degree $40,000.00 
+4           P004     Female            MA  Less than high school $30,000.00 
+5           P005       Male            WA    High School Diploma $25,500.00 
+6           P006     Female            WA    High School Diploma $45,000.00 
+  state_ma
+1       MA
+2     &lt;NA&gt;
+3     &lt;NA&gt;
+4       MA
+5     &lt;NA&gt;
+6     &lt;NA&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="cleaning-currency-and-numbers-with-str_remove-and-as.numeric" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-currency-and-numbers-with-str_remove-and-as.numeric">Cleaning Currency and Numbers with str_remove() and as.numeric()</h3>
+<p>All other examples were basically just filtering data examples, but cleaning up text strings is where most of these stringr packages come in handy. For example, numeric variables often come attached to symbols like $ or “,” (like our income columns).</p>
+<p>Because R views “$60,000” as text/a string, we can’t calculate a mean or median until we clean it up. We can use <code>str_remove()</code> to strip unwanted symbols.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>demo_clean <span class="ot">&lt;-</span> demo_data <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">income_clean =</span> <span class="fu">str_remove</span>(income, <span class="st">"</span><span class="sc">\\</span><span class="st">$"</span>), <span class="co"># Remove the dollar sign</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">income_clean =</span> <span class="fu">str_remove</span>(income_clean, <span class="st">","</span>), <span class="co"># remove comma</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">income_clean =</span> <span class="fu">as.numeric</span>(income_clean) <span class="co"># treat as a number</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(demo_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id     gender site_location        education_level      income
+1           P001     Female            MA      Bachelor's Degree $60,000.00 
+2           P002       Male            NY Some Community College $35,000.00 
+3           P003 Non-Binary            AZ     Associate's Degree $40,000.00 
+4           P004     Female            MA  Less than high school $30,000.00 
+5           P005       Male            WA    High School Diploma $25,500.00 
+6           P006     Female            WA    High School Diploma $45,000.00 
+  income_clean
+1        60000
+2        35000
+3        40000
+4        30000
+5        25500
+6        45000</code></pre>
+</div>
+</div>
+<p>Now, we can calculate the mean.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(demo_clean<span class="sc">$</span>income_clean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 62454.17</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="your-turn-lets-put-everything-into-practice." class="level1">
+<h1>Your Turn: Let’s put everything into practice.</h1>
+<p>We have another csv file that contains some additional health information on our participants, such as cholesterol, blood pressure, and BMI called <code>lab_results</code>. All of the following exercises will leverage this dataset along with the other two datasets we used earlier. We’re going to start from scratch, though so first, we need to clear your environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Some of these steps we did earlier, but try to do them without checking your previous code first.</p>
+<section id="read-in-3-csvs-rehab_study.csv-rehab_study_demo.csv-and-lab_results.csv." class="level2">
+<h2 class="anchored" data-anchor-id="read-in-3-csvs-rehab_study.csv-rehab_study_demo.csv-and-lab_results.csv.">1. Read in 3 CSVs: rehab_study.csv, rehab_study_demo.csv, and lab_results.csv.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment the lines below and get started.</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># clinical_data &lt;- rehab_study.csv here</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># demo_data &lt;- rehab_study_demo.csv here</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># lab_data &lt;- lab_results.csv here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>clinical_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'rehab_study.csv'</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>demo_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'rehab_study_demo.csv'</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>lab_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'lab_results.csv'</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="merge-rehab_study.csv-with-rehab_study_demo.csv-using-left_join-and-save-as-study_full.-please-note-that-you-may-need-to-rename-columns-to-accomplish-this-task." class="level2">
+<h2 class="anchored" data-anchor-id="merge-rehab_study.csv-with-rehab_study_demo.csv-using-left_join-and-save-as-study_full.-please-note-that-you-may-need-to-rename-columns-to-accomplish-this-task.">2. Merge rehab_study.csv with rehab_study_demo.csv using left_join() and save as <code>study_full</code>. Please note that you may need to rename columns to accomplish this task.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>demo_data <span class="ot">&lt;-</span> <span class="fu">rename</span>(demo_data, <span class="at">participant_id =</span> study_id)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>study_full <span class="ot">&lt;-</span> <span class="fu">left_join</span>(clinical_data, demo_data, <span class="at">by =</span> <span class="st">"participant_id"</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(study_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id age        group baseline_score followup_score visits
+1           P001  51 Intervention             59             69      4
+2           P002  60 Intervention             50             58      6
+3           P003  38 Intervention             35             46      9
+4           P004  29 Intervention             47             57      6
+5           P005  32 Intervention             59             76      8
+6           P006  38 Intervention             61             73      4
+  completed     gender site_location        education_level  income_usd
+1       Yes     Female            MA      Bachelor's Degree $60,000.00 
+2       Yes       Male            NY Some Community College $35,000.00 
+3       Yes Non-Binary            AZ     Associate's Degree $40,000.00 
+4       Yes     Female            MA  Less than high school $30,000.00 
+5       Yes       Male            WA    High School Diploma $25,500.00 
+6       Yes     Female            WA    High School Diploma $45,000.00 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-familiar-with-your-newest-dataset-lab_results-by-using-head.-check-the-structure-of-your-dataset-using-str." class="level2">
+<h2 class="anchored" data-anchor-id="get-familiar-with-your-newest-dataset-lab_results-by-using-head.-check-the-structure-of-your-dataset-using-str.">3. Get familiar with your newest dataset, lab_results, by using head(). Check the structure of your dataset using str().</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lab_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id cholesterol_level blood_pressure  bmi
+1           P001         199 mg/dL    131/84 mmHg 20.9
+2           P002         174 mg/dL    131/71 mmHg 26.6
+3           P003         173 mg/dL    115/91 mmHg 26.4
+4           P004         162 mg/dL    124/85 mmHg 22.0
+5           P005         209 mg/dL    146/94 mmHg 25.8
+6           P006         156 mg/dL    142/77 mmHg 25.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(lab_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   30 obs. of  4 variables:
+ $ participant_id   : Factor w/ 30 levels "P001","P002",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ cholesterol_level: Factor w/ 27 levels "156 mg/dL","157 mg/dL",..: 13 9 8 3 17 1 15 11 12 7 ...
+ $ blood_pressure   : Factor w/ 30 levels "110/81 mmHg",..: 17 16 6 11 28 25 7 4 29 3 ...
+ $ bmi              : num  20.9 26.6 26.4 22 25.8 25.3 28.4 28.7 20.2 24.9 ...</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="merge-lab_data-into-study_full-using-left_join-by-participant_id.-save-as-complete_study." class="level2">
+<h2 class="anchored" data-anchor-id="merge-lab_data-into-study_full-using-left_join-by-participant_id.-save-as-complete_study.">4. Merge lab_data into study_full using left_join() by participant_id. Save as <code>complete_study</code>.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#YOUR CODE HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>complete_study <span class="ot">&lt;-</span> <span class="fu">left_join</span>(study_full, lab_data, <span class="at">by =</span> <span class="st">"participant_id"</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(complete_study)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id age        group baseline_score followup_score visits
+1           P001  51 Intervention             59             69      4
+2           P002  60 Intervention             50             58      6
+3           P003  38 Intervention             35             46      9
+4           P004  29 Intervention             47             57      6
+5           P005  32 Intervention             59             76      8
+6           P006  38 Intervention             61             73      4
+  completed     gender site_location        education_level  income_usd
+1       Yes     Female            MA      Bachelor's Degree $60,000.00 
+2       Yes       Male            NY Some Community College $35,000.00 
+3       Yes Non-Binary            AZ     Associate's Degree $40,000.00 
+4       Yes     Female            MA  Less than high school $30,000.00 
+5       Yes       Male            WA    High School Diploma $25,500.00 
+6       Yes     Female            WA    High School Diploma $45,000.00 
+  cholesterol_level blood_pressure  bmi
+1         199 mg/dL    131/84 mmHg 20.9
+2         174 mg/dL    131/71 mmHg 26.6
+3         173 mg/dL    115/91 mmHg 26.4
+4         162 mg/dL    124/85 mmHg 22.0
+5         209 mg/dL    146/94 mmHg 25.8
+6         156 mg/dL    142/77 mmHg 25.3</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="in-complete_study-clean-the-cholesterol_level-column-by-removing-mgdl-and-converting-it-to-numeric-as-cholesterol_clean.-also-create-a-score_improvement-column.-accomplish-this-all-using-mutate-and-assign-it-to-a-new-dataframe-called-complete_clean." class="level2">
+<h2 class="anchored" data-anchor-id="in-complete_study-clean-the-cholesterol_level-column-by-removing-mgdl-and-converting-it-to-numeric-as-cholesterol_clean.-also-create-a-score_improvement-column.-accomplish-this-all-using-mutate-and-assign-it-to-a-new-dataframe-called-complete_clean.">5. In <code>complete_study</code>, clean the <code>cholesterol_level</code> column by removing “mg/dL” and converting it to numeric as <code>cholesterol_clean</code>. Also create a <code>score_improvement</code> column. Accomplish this all using mutate() and assign it to a new dataframe called <code>complete_clean</code>.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>complete_clean <span class="ot">&lt;-</span> complete_study <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cholesterol_clean =</span> <span class="fu">str_remove</span>(cholesterol_level, <span class="st">" mg/dL"</span>),</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cholesterol_clean =</span> <span class="fu">as.numeric</span>(cholesterol_clean),</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">score_improvement =</span> followup_score <span class="sc">-</span> baseline_score</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(complete_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  participant_id age        group baseline_score followup_score visits
+1           P001  51 Intervention             59             69      4
+2           P002  60 Intervention             50             58      6
+3           P003  38 Intervention             35             46      9
+4           P004  29 Intervention             47             57      6
+5           P005  32 Intervention             59             76      8
+6           P006  38 Intervention             61             73      4
+  completed     gender site_location        education_level  income_usd
+1       Yes     Female            MA      Bachelor's Degree $60,000.00 
+2       Yes       Male            NY Some Community College $35,000.00 
+3       Yes Non-Binary            AZ     Associate's Degree $40,000.00 
+4       Yes     Female            MA  Less than high school $30,000.00 
+5       Yes       Male            WA    High School Diploma $25,500.00 
+6       Yes     Female            WA    High School Diploma $45,000.00 
+  cholesterol_level blood_pressure  bmi cholesterol_clean score_improvement
+1         199 mg/dL    131/84 mmHg 20.9               199                10
+2         174 mg/dL    131/71 mmHg 26.6               174                 8
+3         173 mg/dL    115/91 mmHg 26.4               173                11
+4         162 mg/dL    124/85 mmHg 22.0               162                10
+5         209 mg/dL    146/94 mmHg 25.8               209                17
+6         156 mg/dL    142/77 mmHg 25.3               156                12</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="filter-complete_clean-for-participants-who-completed-the-study-group-by-group-and-calculate-the-following-using-the-summarize-function" class="level2">
+<h2 class="anchored" data-anchor-id="filter-complete_clean-for-participants-who-completed-the-study-group-by-group-and-calculate-the-following-using-the-summarize-function">6. Filter <code>complete_clean</code> for participants who completed the study, group by <code>group</code>, and calculate the following using the summarize() function:</h2>
+<ul>
+<li><p>Average baseline score (<code>avg_baseline</code>)</p></li>
+<li><p>Average follow up score (<code>avg_followup</code>)</p></li>
+<li><p>Average score improvement (<code>avg_improvement</code>)</p></li>
+<li><p>Average cholesterol level (<code>avg_cholesterol</code>)</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>group_summary <span class="ot">&lt;-</span> complete_clean <span class="sc">%&gt;%</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(completed <span class="sc">==</span> <span class="st">"Yes"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_baseline    =</span> <span class="fu">mean</span>(baseline_score),</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_followup    =</span> <span class="fu">mean</span>(followup_score),</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_improvement =</span> <span class="fu">mean</span>(score_improvement),</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_cholesterol =</span> <span class="fu">mean</span>(cholesterol_clean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="now-lets-reshape-your-data-to-compare-different-health-metrics." class="level2">
+<h2 class="anchored" data-anchor-id="now-lets-reshape-your-data-to-compare-different-health-metrics.">7. Now, let’s reshape your data to compare different health metrics.</h2>
+<p>So far, we’ve looked at scores over time[cite: 1, 3]. But what if we want to create side-by-side plots comparing <strong>two completely different measures</strong>, like a participant’s total clinic <code>visits</code> and their <code>bmi</code>?</p>
+<p>Because <code>visits</code> lives in one column and <code>bmi</code> lives in another, <code>ggplot2</code> wouldn’t be able to plot them side-by-side on the same chart layout[cite: 1, 3]. We need to reshape the dataset so that the metric names (<code>"visits"</code> vs <code>"bmi"</code>) sit in one categorical column, and their numeric measurements sit in another[cite: 1, 3]!</p>
+<p><strong>Your Goal:</strong></p>
+<ol type="1">
+<li>Take <code>complete_clean</code> and use <code>select()</code> to pull <code>participant_id</code>, <code>group</code>, <code>visits</code>, and <code>bmi.</code> Save as <code>health_wide</code>.</li>
+<li>Use <code>pivot_longer()</code> on <code>health_wide</code>
+<ol type="1">
+<li><code>cols = c(visits, bmi)</code> <span class="math inline">\(\rightarrow\)</span> The two health metric columns to collapse</li>
+<li><code>names_to = "metric_type"</code> <span class="math inline">\(\rightarrow\)</span> The new column name holding the labels <code>"visits"</code> and <code>"bmi"</code></li>
+<li><code>values_to = "measurement"</code> <span class="math inline">\(\rightarrow\)</span> The new column name holding the numeric values</li>
+</ol></li>
+<li>Save the final long dataset as <code>health_metrics_long</code>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Select your relevant health metric columns. </span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Pivot from wide format to long format. Uncomment the line of code below to get started.</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co"># health_metrics_long &lt;- </span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your results. Uncomment the line of code below to get started.</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co"># head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer.
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Select relevant health metric columns.</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>health_wide <span class="ot">&lt;-</span> complete_clean <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(participant_id, group, visits, bmi)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Pivot from wide format to long format.</span></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>health_metrics_long <span class="ot">&lt;-</span> health_wide <span class="sc">%&gt;%</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(visits, bmi),</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"metric_type"</span>,</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"measurement"</span></span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the result.</span></span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(health_metrics_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  participant_id group        metric_type measurement
+  &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;             &lt;dbl&gt;
+1 P001           Intervention visits              4  
+2 P001           Intervention bmi                20.9
+3 P002           Intervention visits              6  
+4 P002           Intervention bmi                26.6
+5 P003           Intervention visits              9  
+6 P003           Intervention bmi                26.4</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="save-your-work." class="level2">
+<h2 class="anchored" data-anchor-id="save-your-work.">8. Save your work.</h2>
+<p>We will also use this new long format dataset next week for data visualization. Write it to a csv and name it health_metrics_long.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you’re stuck, click here for the answer.
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(health_metrics_long, <span class="st">'health_metrics_wide.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
